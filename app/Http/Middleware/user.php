@@ -15,10 +15,10 @@ class user
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role== 0) {
+        // if (auth()->user()->role== 0) {
             return $next($request);
-        }else{
-            return redirect()->route('userdashboard');
-        }
+        // }else{
+        //     return redirect()->route('userdashboard');
+        // }
     }
 }

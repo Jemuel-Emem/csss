@@ -7,7 +7,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
   const textContainer = document.querySelector(".text-container");
-  const text = "WELCOME TO SKSU SURVEY SYSTEM  ";
+  const text = "Welcome to  CLIENT SATISFACTION SURVEY  ";
   let index = 0;
 
   function typeText() {

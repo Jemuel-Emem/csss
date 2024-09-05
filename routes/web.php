@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('user-dashboard');
 });
 
 
@@ -28,9 +28,9 @@ Route::middleware([
            else if (auth()->user()->role == 2) {
             return redirect()->route('director-dashboard');
            }
-           else{
-            return redirect()->route('user-dashboard');
-           }
+        //    else{
+        //     return redirect()->route('user-dashboard');
+        //    }
          })->name('userdashboard');
 
     });
@@ -53,17 +53,11 @@ Route::middleware([
         })->name('results');
      });
 
-     Route::prefix('user')->middleware('user')->group(function(){
-        Route::get('/dashboard', function(){
-               return view('user.index');
-           })->name('user-dashboard');
-
-           Route::get('/survey', function(){
-            return view('user.take-survey');
-        })->name('take-survey');
+    //  Route::prefix('user')->middleware('user')->group(function(){
 
 
-    });
+
+    // });
 
     Route::prefix('director')->middleware('director')->group(function(){
         Route::get('/dashboard', function(){
@@ -72,6 +66,13 @@ Route::middleware([
     });
 
 
+Route::get('/welcome', function(){
+        return view('user.index');
+    })->name('user-dashboard');
+
+    Route::get('/survey', function(){
+     return view('user.take-survey');
+ })->name('take-survey');
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
