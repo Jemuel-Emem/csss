@@ -70,9 +70,17 @@ Route::get('/welcome', function(){
         return view('user.index');
     })->name('user-dashboard');
 
-    Route::get('/survey', function(){
+Route::get('/survey', function(){
      return view('user.take-survey');
  })->name('take-survey');
+
+ Route::get('/offline-form', function(){
+    return view('user.offline-form');
+})->name('offline');
+
+Route::get('/online-form', function(){
+    return view('user.online-form');
+})->name('online');
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
