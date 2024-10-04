@@ -1,6 +1,5 @@
 <div>
     <div>
-
         <div class="mt-8">
             <h2 class="text-lg font-bold">Survey Results Chart</h2>
             <canvas id="surveyChart"></canvas>
@@ -13,10 +12,10 @@
             const chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: @json(array_values($categoryLabels)),
+                    labels: @json(array_values($categoryLabels)), // Chart labels
                     datasets: [{
-                        label: 'Number of Responses',
-                        data: @json(array_values($totals)),
+                        label: 'Percentage  (%)', // Updated label
+                        data: @json(array_values($percentages)), // Use percentages here
                         backgroundColor: [
                             'rgba(75, 192, 192, 0.2)',
                             'rgba(153, 102, 255, 0.2)',
@@ -37,12 +36,17 @@
                 options: {
                     plugins: {
                         datalabels: {
-                            display: false
+                            display: false // Disable data labels if you don't want them
                         }
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%'; // Display percentage symbol
+                                }
+                            }
                         }
                     }
                 },
@@ -50,9 +54,7 @@
                     id: 'customImagePlugin',
                     beforeDraw: (chart) => {
                         const ctx = chart.ctx;
-                        const data = chart.data.datasets[0].data;
-                        const labels = chart.data.labels;
-
+                        const dataset = chart.getDatasetMeta(0);
                         const images = {
                             'Very Satisfied': '{{ asset('images/approve.png') }}',
                             'Satisfied': '{{ asset('images/happy.png') }}',
@@ -61,13 +63,17 @@
                             'Not Applicable': '{{ asset('images/sad.png') }}'
                         };
 
-                        data.forEach((value, index) => {
-                            const label = labels[index];
+                        dataset.data.forEach((bar, index) => {
+                            const label = chart.data.labels[index];
+                            const imageSrc = images[label];
                             const image = new Image();
-                            image.src = images[label];
+                            image.src = imageSrc;
 
-
-                            ctx.drawImage(image, chart.getDatasetMeta(0).data[index].x - 12, chart.getDatasetMeta(0).data[index].y - 12, 24, 24);
+                            image.onload = function() {
+                                const x = bar.x - 12; // Adjust position
+                                const y = bar.y - 12; // Adjust position
+                                ctx.drawImage(image, x, y, 24, 24);
+                            };
                         });
                     }
                 }]
