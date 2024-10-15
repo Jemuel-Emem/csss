@@ -194,7 +194,7 @@
         <div class="mt-2">
             <x-card class="bg-white text-black rounded-lg">
                 <div class="text-gray-500">
-                    <h1 class="font-bold text-xl">Please read each statement and select a number, 0, 1, 2, 3, or 4 which indicates how the statement applies. There are no right or wrong answers. Do not spend too much time on any statement.</h1>
+                    <h1 class="font-bold text-xl">Please read each statement and select a number, 1, 2, 3, 4, or 5 which indicates how the statement applies. There are no right or wrong answers. Do not spend too much time on any statement.</h1>
 
                     <div class="flex flex-col mt-4">
                         <span class="font-sans">The rating scale is as follows:</span>
@@ -226,7 +226,7 @@
                                     <x-native-select class="w-full"
                                         label="Select Scale"
                                         placeholder="Select"
-                                        :options="['0', '1', '2', '3', '4']"
+                                        :options="['1', '2', '3', '4', '5']"
                                         wire:model.defer="answers.{{ $question->id }}"
                                         required
                                     />

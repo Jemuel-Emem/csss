@@ -35,7 +35,7 @@
                             <x-native-select class="w-full"
                                 label="Select Scale"
                                 placeholder="Select"
-                                :options="['0', '1', '2', '3', '4']"
+                                :options="['1', '2', '3', '4', '5']"
                                 wire:model.defer="answers.{{ $question->id }}"
                                 required
                             />

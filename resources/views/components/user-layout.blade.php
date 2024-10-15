@@ -84,7 +84,7 @@
                 <div class="relative flex-shrink-0 ml-5" @click.away="open = false" x-data="{ open: false }">
                     <div>
                         {{-- <span class="text-white font-bold uppercase">{{ Auth::user()->name }}</span> --}}
-                        <a href="{{ route('logout') }}" class="text-yellow-500">Login</a>
+                        <a href="{{ route('logout') }}" class="text-yellow-500">Admin Login</a>
                     </div>
                 </div>
             </div>

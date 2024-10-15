@@ -46,19 +46,19 @@ class Takesurvey extends Component
 
         foreach ($this->answers as $answer) {
             switch ($answer) {
-                case 4:
+                case 5:
                     $surveyData['verysatisfied'] = 1;
                     break;
-                case 3:
+                case 4:
                     $surveyData['satisfied'] = 1;
                     break;
-                case 2:
+                case 3:
                     $surveyData['neithersatisfied'] = 1;
                     break;
-                case 1:
+                case 2:
                     $surveyData['dissatisfied'] = 1;
                     break;
-                case 0:
+                case 1:
                     $surveyData['notapplicable'] = 1;
                     break;
             }

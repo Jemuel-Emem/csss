@@ -51,6 +51,14 @@ Route::middleware([
         Route::get('/results', function(){
             return view('admin.results');
         })->name('results');
+
+        Route::get('/remarks', function(){
+            return view('admin.remarks');
+        })->name('rem');
+
+        Route::get('/cc', function(){
+            return view('admin.cc-list');
+        })->name('admin.cc-list');
      });
 
     //  Route::prefix('user')->middleware('user')->group(function(){

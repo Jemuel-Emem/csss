@@ -30,13 +30,20 @@
 </head>
 <body class="font-sans text-gray-900 antialiased relative">
     <div class="background-image"></div>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 bg-opacity-75 relative z-10">
-        <div class="relative z-20">
-            <a href="/" wire:navigate>
-                <img src="{{ asset('images/logocss.png') }}" alt="Logo" class="w-32 h-32">
+    <!-- Navigation Bar -->
+    <div class="w-full bg-gray-100 bg-opacity-75 py-4 shadow-lg relative z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-6">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="{{ asset('images/logocss.png') }}" alt="Logo" class="w-10 h-10">
+                <span class="text-xl font-semibold text-gray-700">CSSS</span>
             </a>
+            <a href="{{ route('user-dashboard') }}" class="text-gray-700 hover:text-gray-900 underline">Home</a>
         </div>
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg relative z-20">
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 bg-opacity-75 relative z-10">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             {{ $slot }}
         </div>
     </div>
