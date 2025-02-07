@@ -71,6 +71,14 @@ Route::middleware([
         Route::get('/dashboard', function(){
                return view('director.index');
            })->name('director-dashboard');
+
+           Route::get('/director.accounts', function(){
+            return view('director.add-account');
+        })->name('director-add-account');
+
+        Route::get('/director.survey', function(){
+            return view('director.survey-question');
+        })->name('director.survey');
     });
 
 

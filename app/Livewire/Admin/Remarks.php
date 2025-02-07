@@ -10,8 +10,9 @@ class Remarks extends Component
     public $ratings;
     public function mount()
     {
-
-        $this->ratings = ratings::select('age', 'sex', 'region', 'agency_visited', 'service_availed', 'customer_type', 'remarks')->get();
+        $this->ratings = ratings::where('user_id', auth()->id())
+            ->select('age', 'sex', 'region', 'agency_visited', 'service_availed', 'customer_type', 'remarks')
+            ->get();
     }
 
     public function render()

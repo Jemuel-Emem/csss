@@ -20,5 +20,12 @@ class DatabaseSeeder extends Seeder
           'password' => 'password',
           'role'=> 1
       ]);
+
+      \App\Models\User::factory()->create([
+        'name' => 'SP',
+        'email' => 'sp@gmail.com',
+        'password' => 'password',
+        'role'=> 2
+    ]);
     }
 }

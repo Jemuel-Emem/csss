@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('age');
             $table->string('sex');
             $table->string('region');
@@ -22,11 +23,11 @@ return new class extends Migration
             $table->integer('cc1');
             $table->integer('cc2');
             $table->integer('cc3');
-            $table->string('sd');
-            $table->string('d');
-            $table->string('nad');
-            $table->string('a');
-            $table->string('sa');
+            $table->integer('sd');
+            $table->integer('d');
+            $table->integer('nad');
+            $table->integer('a');
+            $table->integer('sa');
             $table->text('remarks')->nullable();
             $table->timestamps();
         });

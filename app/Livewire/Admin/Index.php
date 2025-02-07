@@ -22,22 +22,23 @@ class Index extends Component
     ];
 
     public function mount()
-    {
-        $this->rates = Rate::all();
-        $this->totalUsers = $this->rates->count(); // Total number of responses or users
-        $this->calculateTotals();
-        $this->calculatePercentages();
-        $this->determineMostChosenCategory();
-    }
+{
+    $this->rates = Rate::where('user_id', auth()->id())->get();
+    $this->totalUsers = $this->rates->count();
+    $this->calculateTotals();
+    $this->calculatePercentages();
+    $this->determineMostChosenCategory();
+}
+
 
     public function calculateTotals()
     {
         $this->totals = [
-            'verysatisfied' => $this->rates->sum('sd'),
-            'satisfied' => $this->rates->sum('d'),
+            'notapplicable' => $this->rates->sum('sd'),
+            'dissatisfied' => $this->rates->sum('d'),
             'neithersatisfied' => $this->rates->sum('nad'),
-            'dissatisfied' => $this->rates->sum('a'),
-            'notapplicable' => $this->rates->sum('sa'),
+            'satisfied' => $this->rates->sum('a'),
+            'verysatisfied' => $this->rates->sum('sa'),
         ];
     }
 

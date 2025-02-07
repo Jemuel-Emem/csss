@@ -70,7 +70,7 @@
                             image.src = imageSrc;
 
                             image.onload = function() {
-                                const x = bar.x - 12; // Adjust position
+                                const x = bar.x - 12;
                                 const y = bar.y - 12; // Adjust position
                                 ctx.drawImage(image, x, y, 24, 24);
                             };

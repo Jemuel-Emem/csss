@@ -15,6 +15,7 @@
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css"
     rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         [x-cloak] {
@@ -73,29 +74,37 @@
                     </a>
                 </li> --}}
 
-                 <li>
-                    <a href=""   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="ri-add-box-fill"></i>
-                       <span class="flex-1 ms-3 whitespace-nowrap">Add Survey</span>
+                <li>
+                    <a href="{{ route('Admindashboard') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i class="ri-add-box-fill "></i>
+                       <span class="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
 
                     </a>
                  </li>
 
                  <li>
-                    <a href=""   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="ri-question-fill"></i>
-                       <span class="flex-1 ms-3 whitespace-nowrap">Results</span>
+                    <a href="{{ route('director-add-account') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i class="ri-group-fill"></i>
+                       <span class="flex-1 ms-3 whitespace-nowrap">Manage Accounts </span>
 
                     </a>
                  </li>
 
                  {{-- <li>
-                    <a href="{{ route('office') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <i class="ri-user-add-fill"></i>
-                       <span class="flex-1 ms-3 whitespace-nowrap">Add Office Department</span>
+                    <a href=""   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i class="ri-question-fill"></i>
+                       <span class="flex-1 ms-3 whitespace-nowrap">Results</span>
 
                     </a>
                  </li> --}}
+
+                 <li>
+                    <a href="{{ route('director.survey') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i class="ri-user-add-fill"></i>
+                       <span class="flex-1 ms-3 whitespace-nowrap">Survey Questionaire</span>
+
+                    </a>
+                 </li>
 
             </ul>
 

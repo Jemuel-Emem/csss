@@ -10,8 +10,7 @@ class CcList extends Component
 
     public function mount()
     {
-
-        $this->ratings = ratings::all();
+        $this->ratings = ratings::where('user_id', auth()->id())->get();
     }
 
     public function render()

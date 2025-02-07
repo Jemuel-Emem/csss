@@ -58,6 +58,27 @@
                 @error('customer_type') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
+            <div class="mb-6">
+                <label class="block text-gray-700">Select Department</label>
+                <select wire:model="department" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    <option value="">Select Department</option>
+                    @if (!empty($departments))
+                    @foreach ($departments as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                    @endforeach
+                @else
+                    <option value="">No departments available</option>
+                @endif
+
+                </select>
+                @error('user_id')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+
+
+
 
             <div class="mb-6">
                 <h3 class="text-lg font-bold text-gray-700">Citizen’s Charter (CC) Questions</h3>
@@ -106,90 +127,7 @@
                     @error('cc3') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
-    {{-- <div class="mb-6">
-        <h3 class="text-lg font-bold text-gray-700">Satisfaction Rating</h3>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left table-auto">
-                <thead>
-                    <tr>
-                        <th class="border px-4 py-2">Questions</th>
-                        <th class="border px-4 py-2">1(SD)</th>
-                        <th class="border px-4 py-2">2(D)</th>
-                        <th class="border px-4 py-2">3(NAD)</th>
-                        <th class="border px-4 py-2">4(A)</th>
-                        <th class="border px-4 py-2">5(SA)</th>
-                    </tr>
-                </thead>
-                <tbody>
 
-                    <tr class="bg-white">
-                        <td class="border px-4 py-2">SQD1: I spent an acceptable amount of time to complete my transaction (Responsiveness).</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="1"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="2"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="3"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="4"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="5"></td>
-                    </tr>
-                    <tr class="bg-gray-100">
-                        <td class="border px-4 py-2">SQD2: The staff was knowledgeable and could answer my questions.</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="6"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="7"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="8"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="9"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="10"></td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="border px-4 py-2">SQD3: I was treated with respect and courtesy.</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="1"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="2"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="3"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="4"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="5"></td>
-                    </tr>
-                    <tr class="bg-gray-100">
-                        <td class="border px-4 py-2">SQD4: The office was clean and well-maintained.</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="1"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="2"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="3"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="4"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="5"></td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="border px-4 py-2">SQD5: I received adequate information regarding my transaction.</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="1"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="2"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="3"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="4"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="5"></td>
-                    </tr>
-                    <tr class="bg-gray-100">
-                        <td class="border px-4 py-2">SQD6: I am satisfied with the overall service provided.</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="1"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="2"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="3"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="4"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="5"></td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="border px-4 py-2">SQD7: I would recommend this office to others.</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="1"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="2"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="3"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="4"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="5"></td>
-                    </tr>
-                    <tr class="bg-gray-100">
-                        <td class="border px-4 py-2">SQD8: Overall, I am satisfied with my experience with this agency.</td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sd" value="1"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="d" value="2"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="nad" value="3"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="a" value="4"></td>
-                        <td class="border px-4 py-2 text-center"><input type="radio" wire:model="sa" value="5"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div> --}}
     <div>
         <div class="mt-2">
             <x-card class="bg-white text-black rounded-lg">
