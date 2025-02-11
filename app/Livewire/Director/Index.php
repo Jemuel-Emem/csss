@@ -25,7 +25,7 @@ class Index extends Component
         $totalResponses = $ratings->count();
 
         // Sum of 'sa' (Strongly Agree) responses in this department
-        $totalSA = $ratings->where('sa', 1)->count();  // Count only the "Strongly Agree" responses (assuming 'sa' is a rating value from 1-5)
+        $totalSA = $ratings->where('sa')->count();  // Count only the "Strongly Agree" responses (assuming 'sa' is a rating value from 1-5)
 
         // Calculate the percentage of 'sa' responses for the department
         $meanSA = $totalResponses > 0 ? ($totalSA / $totalResponses) * 100 : 0;
