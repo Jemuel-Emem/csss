@@ -68,29 +68,17 @@ class SurveyQuestion extends Component
 
     public function delete($id)
     {
-        $this->dialog()->confirm([
-            'title'       => 'Are you sure?',
-            'description' => 'You won\'t be able to revert this!',
-            'icon'        => 'warning',
-            'accept'      => [
-                'label'  => 'Yes, delete it!',
-                'method' => 'deleteConfirmed',
-                'params' => $id,
-            ],
-            'reject' => [
-                'label'  => 'No, cancel',
-            ],
-        ]);
-    }
-
-    public function deleteConfirmed($id)
-    {
         Question::findOrFail($id)->delete();
 
         $this->notification()->success(
             $title = 'Success',
             $description = 'Question deleted successfully!'
         );
+    }
+
+    public function deleteConfirmed($id)
+    {
+
     }
 
 }
