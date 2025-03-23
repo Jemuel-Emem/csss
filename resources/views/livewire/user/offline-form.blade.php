@@ -35,31 +35,46 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                <div>
-                    <label class="block text-gray-700">Agency visited:</label>
-                    <input type="text" wire:model="agency_visited" placeholder="Enter the agency name" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                    @error('agency_visited') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                <div class="mb-6">
+                    <label class="block text-gray-700">Office Visited:</label>
+
+                    <select  wire:model="office_id" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                        <option value="">Select Office</option>
+                        @foreach ($offices as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @error('office_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
-                <div>
-                    <label class="block text-gray-700">Service availed:</label>
-                    <input type="text" wire:model="service_availed" placeholder="Enter the service availed" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                    @error('service_availed') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+
+                <div class="mb-6">
+                    <label class="block text-gray-700">Service Availed:</label>
+                    <select wire:model="service_id" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                        <option value="">Select a Service</option>
+                        @foreach ($services as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                    @error('service_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
+
             </div>
 
             <div class="mb-6">
-                <label class="block text-gray-700">Customer type:</label>
+                <label class="block text-gray-700">Client type:</label>
                 <select wire:model="customer_type" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                    <option value="">Select customer type</option>
+                    <option value="">Select client type</option>
                     <option value="Citizen">Citizen</option>
                     <option value="Business">Business</option>
                     <option value="Government">Government</option>
+                    <option value="Student">Student</option>
+                    <option value="Visitor">Visitor</option>
                 </select>
                 @error('customer_type') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-6">
-                <label class="block text-gray-700">Select Department</label>
+                <label class="block text-gray-700">Select Offices/Department</label>
                 <select wire:model="department" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
                     <option value="">Select Department</option>
                     @if (!empty($departments))
@@ -153,7 +168,7 @@
                 <hr class="mt-4">
 
                 <div>
-                    @if($questions && count($questions) > 0)
+                    {{-- @if($questions && count($questions) > 0)
                         @foreach($questions as $question)
                             <div class="flex justify-between items-center mt-4">
                                 <div class="flex items-center text-lg">
@@ -173,7 +188,49 @@
                         @endforeach
                     @else
                         <p>No questions available at the moment.</p>
-                    @endif
+                    @endif --}}
+
+                    @if($questions && count($questions) > 0)
+                    @foreach($questions as $question)
+                        <div class="flex flex-col mt-4 p-4 border rounded-lg bg-gray-100">
+                            <span class="text-lg font-semibold">{{ $loop->iteration }}. {{ $question->question }}</span>
+
+                            <div class="flex justify-around mt-2">
+                                <label class="flex flex-col items-center cursor-pointer">
+                                    <input type="radio" wire:model="answers.{{ $question->id }}" value="1" class="hidden peer">
+                                    <span class="text-3xl peer-checked:bg-gray-300 p-2 rounded-lg">😡</span>
+                                    <span class="text-sm">Strongly Disagree</span>
+                                </label>
+
+                                <label class="flex flex-col items-center cursor-pointer">
+                                    <input type="radio" wire:model="answers.{{ $question->id }}" value="2" class="hidden peer">
+                                    <span class="text-3xl peer-checked:bg-gray-300 p-2 rounded-lg">😠</span>
+                                    <span class="text-sm">Disagree</span>
+                                </label>
+
+                                <label class="flex flex-col items-center cursor-pointer">
+                                    <input type="radio" wire:model="answers.{{ $question->id }}" value="3" class="hidden peer">
+                                    <span class="text-3xl peer-checked:bg-gray-300 p-2 rounded-lg">😐</span>
+                                    <span class="text-sm">Neutral</span>
+                                </label>
+
+                                <label class="flex flex-col items-center cursor-pointer">
+                                    <input type="radio" wire:model="answers.{{ $question->id }}" value="4" class="hidden peer">
+                                    <span class="text-3xl peer-checked:bg-gray-300 p-2 rounded-lg">😊</span>
+                                    <span class="text-sm">Agree</span>
+                                </label>
+
+                                <label class="flex flex-col items-center cursor-pointer">
+                                    <input type="radio" wire:model="answers.{{ $question->id }}" value="5" class="hidden peer">
+                                    <span class="text-3xl peer-checked:bg-gray-300 p-2 rounded-lg">😍</span>
+                                    <span class="text-sm">Strongly Agree</span>
+                                </label>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <p>No questions available at the moment.</p>
+                @endif
                 </div>
 
 

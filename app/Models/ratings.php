@@ -14,8 +14,8 @@ class ratings extends Model
         'age',
         'sex',
         'region',
-        'agency_visited',
-        'service_availed',
+        'office_id',
+        'service_id',
         'customer_type',
         'cc1',
         'cc2',
@@ -33,4 +33,15 @@ class ratings extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function office()
+{
+    return $this->belongsTo(Offices::class, 'office_id');
+}
+
+public function service()
+{
+    return $this->belongsTo(Services::class, 'service_id');
+}
+
 }

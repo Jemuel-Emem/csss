@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('office_id');
+            $table->unsignedBigInteger('service_id');
             $table->string('age');
             $table->string('sex');
             $table->string('region');
-            $table->string('agency_visited');
-            $table->string('service_availed');
             $table->string('customer_type');
             $table->integer('cc1');
             $table->integer('cc2');
@@ -30,6 +30,8 @@ return new class extends Migration
             $table->integer('sa');
             $table->text('remarks')->nullable();
             $table->timestamps();
+
+
         });
     }
 

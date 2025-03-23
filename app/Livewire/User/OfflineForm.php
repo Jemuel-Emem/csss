@@ -2,6 +2,8 @@
 
 namespace App\Livewire\User;
 use App\Models\User;
+use App\Models\Services;
+use App\Models\offices;
 use App\Models\Survey as Question;
 use App\Models\ratings as Rating;
 use Livewire\Component;
@@ -13,8 +15,8 @@ class OfflineForm extends Component
     public $age;
     public $sex;
     public $region;
-    public $agency_visited;
-    public $service_availed;
+    public $office_id;
+    public $service_id;
     public $customer_type;
     public $cc1;
     public $cc2;
@@ -29,34 +31,27 @@ class OfflineForm extends Component
     public $user_id;
     public $department;
     public $users;
+    public $offices = [];
+    public $services = [];
 
-    // public function mount()
-    // {
-    //     // Fetch questions or initialize as empty array if no questions found
-    //     $this->questions = Question::all() ?? [];
-    // }
 
     public function mount()
     {
         $this->questions = Question::all() ?? [];
         $this->departments = User::where('role', 1)->pluck('name', 'id')->toArray() ?? [];
-
+        $this->offices = Offices::pluck('name', 'id')->toArray();
+        $this->services = Services::pluck('name', 'id')->toArray();
     }
 
     public function updatedDepartment($department)
     {
 
-
-        // Fetch users belonging to the selected department
         $this->users = User::where('role', 1)->where('id', $department)->get();
 
-
-
-        // If there's only one user in the department, auto-select their ID
         if ($this->users->count() == 1) {
             $this->user_id = $this->users->first()->id;
         } else {
-            $this->user_id = null; // Reset user_id if multiple users or none
+            $this->user_id = null;
         }
     }
     protected $rules = [
@@ -64,8 +59,8 @@ class OfflineForm extends Component
         'age' => 'required|integer|min:0',
         'sex' => 'required|string|max:10',
         'region' => 'required|string|max:100',
-        'agency_visited' => 'required|string|max:100',
-        'service_availed' => 'required|string|max:100',
+       'office_id' => 'required|exists:offices,id',
+       'service_id' => 'required|exists:services,id',
         'customer_type' => 'required',
         'cc1' => 'required|in:1,2,3',
         'cc2' => 'required|in:1,2,3',
@@ -85,8 +80,8 @@ class OfflineForm extends Component
             'age' => $this->age,
             'sex' => $this->sex,
             'region' => $this->region,
-            'agency_visited' => $this->agency_visited,
-            'service_availed' => $this->service_availed,
+            'office_id' => $this->office_id,
+            'service_id' => $this->service_id,
             'customer_type' => $this->customer_type,
             'cc1' => $this->cc1,
             'cc2' => $this->cc2,
@@ -139,64 +134,7 @@ class OfflineForm extends Component
         $this->reset();
         session()->flash('message', 'Thank you for your feedback!');
     }
-//     public function submit()
-// {
 
-//    // $this->validate();
-//     // $this->validate([
-//     //     'answers' => 'required|array',
-//     //     'answers.*' => 'required|integer|between:0,4',
-//     // ], [
-//     //     'answers.required' => 'All fields must be filled out before proceeding.',
-//     //     'answers.*.required' => 'Each question must have an answer.',
-//     //     'answers.*.integer' => 'Each answer must be a valid integer.',
-//     //     'answers.*.between' => 'Each answer must be between 0 and 4.',
-//     // ]);
-
-//     $surveyData = [
-//         'user_id' => $this->user_id,
-//         'age' => $this->age,
-//         'sex' => $this->sex,
-//         'region' => $this->region,
-//         'agency_visited' => $this->agency_visited,
-//         'service_availed' => $this->service_availed,
-//         'customer_type' => $this->customer_type,
-//         'cc1' => $this->cc1,
-//         'cc2' => $this->cc2,
-//         'cc3' => $this->cc3,
-//         'sd' => 0,
-//         'd' => 0,
-//         'nad' => 0,
-//         'a' => 0,
-//         'sa' => 0,
-//         'remarks' => $this->remarks,
-//     ];
-
-//     foreach ($this->answers as $answer) {
-//         switch ($answer) {
-//             case 1:
-//                 $surveyData['sd'] = 1;
-//                 break;
-//             case 2:
-//                 $surveyData['d'] = 1;
-//                 break;
-//             case 3:
-//                 $surveyData['nad'] = 1;
-//                 break;
-//             case 4:
-//                 $surveyData['a'] = 1;
-//                 break;
-//             case 5:
-//                 $surveyData['sa'] = 1;
-//                 break;
-//         }
-//     }
-
-//     Rating::create($surveyData);
-
-//     $this->reset();
-//     session()->flash('message', 'Thank you for your feedback!');
-// }
 
     public function render()
     {

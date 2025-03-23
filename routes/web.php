@@ -59,6 +59,11 @@ Route::middleware([
         Route::get('/cc', function(){
             return view('admin.cc-list');
         })->name('admin.cc-list');
+
+
+        Route::get('/offices', function(){
+            return view('admin.offices');
+        })->name('admin.offices');
      });
 
     //  Route::prefix('user')->middleware('user')->group(function(){
@@ -79,6 +84,14 @@ Route::middleware([
         Route::get('/director.survey', function(){
             return view('director.survey-question');
         })->name('director.survey');
+
+        Route::get('/director.offices', function(){
+            return view('director.offices');
+        })->name('director.offices');
+
+        Route::get('/director.services', function(){
+            return view('director.services');
+        })->name('director.services');
     });
 
 
