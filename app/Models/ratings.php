@@ -11,6 +11,7 @@ class ratings extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
         'age',
         'sex',
         'region',

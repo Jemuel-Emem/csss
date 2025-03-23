@@ -13,6 +13,7 @@ class OfflineForm extends Component
     public $questions;
     public $answers = [];
     public $age;
+    public $name;
     public $sex;
     public $region;
     public $office_id;
@@ -57,6 +58,7 @@ class OfflineForm extends Component
     protected $rules = [
         'user_id' => 'required',
         'age' => 'required|integer|min:0',
+        'name' => 'required',
         'sex' => 'required|string|max:10',
         'region' => 'required|string|max:100',
        'office_id' => 'required|exists:offices,id',
@@ -77,6 +79,7 @@ class OfflineForm extends Component
        // dd($this->answers);
         $surveyData = [
             'user_id' => $this->user_id,
+            'name' => $this->name,
             'age' => $this->age,
             'sex' => $this->sex,
             'region' => $this->region,

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->unsignedBigInteger('office_id');
             $table->unsignedBigInteger('service_id');
+            $table->string('name');
             $table->string('age');
             $table->string('sex');
             $table->string('region');

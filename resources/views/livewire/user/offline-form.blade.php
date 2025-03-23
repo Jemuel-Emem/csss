@@ -18,6 +18,11 @@
         <form wire:submit.prevent="submit">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
                 <div>
+                    <label class="block text-gray-700">Name:</label>
+                    <input type="text" placeholder="Enter name" wire:model="name" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                </div>
+                <div>
                     <label class="block text-gray-700">Age:</label>
                     <input type="text" placeholder="Enter age" wire:model="age" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
                     @error('age') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
