@@ -4,45 +4,85 @@ namespace App\Livewire\Director;
 
 use Livewire\Component;
 use App\Models\ratings as Rate;
-use App\Models\User;
 
 class Index extends Component
 {
-    public $meanSAByDepartment = [];
+    public $overallScore = 0;
+    public $interpretation = '';
+    public $percentages = [];
 
     public function mount()
-{
-    // Get all departments (assuming department is a 'role' or user group)
-    $departments = User::where('role', 1)->pluck('name', 'id');  // Adjust this if role or department is stored differently
+    {
+        // Fetch total responses
+        $totalResponses = Rate::count();
+        $totalSA = Rate::sum('sa'); // Strongly Agree
+        $totalA = Rate::sum('a');   // Agree
+        $totalNAD = Rate::sum('nad'); // Neither Agree Nor Disagree
+        $totalD = Rate::sum('d');   // Disagree
+        $totalSD = Rate::sum('sd'); // Strongly Disagree
+        $totalNA = Rate::sum('na'); // Not Applicable
 
-    foreach ($departments as $departmentId => $departmentName) {
-        // Get all ratings for the department (based on users in that department)
-        $ratings = Rate::whereHas('user', function ($query) use ($departmentId) {
-            $query->where('id', $departmentId);  // Assuming 'department_id' stores department info
-        })->get();
+        // ✅ Exclude NA responses from calculations
+        $validResponses = $totalResponses - $totalNA;
 
-        // Total number of responses in this department
-        $totalResponses = $ratings->count();
+        // ✅ Prevent division by zero
+        if ($validResponses > 0) {
+            $this->overallScore = (($totalSA + $totalA) / $validResponses) * 100;
 
-        // Sum of 'sa' (Strongly Agree) responses in this department
-        $totalSA = $ratings->where('sa')->count();  // Count only the "Strongly Agree" responses (assuming 'sa' is a rating value from 1-5)
+            // ✅ Calculate percentages ensuring they sum to 100%
+            $totalValidRatings = $totalSA + $totalA + $totalNAD + $totalD + $totalSD;
 
-        // Calculate the percentage of 'sa' responses for the department
-        $meanSA = $totalResponses > 0 ? ($totalSA / $totalResponses) * 100 : 0;
+            if ($totalValidRatings > 0) {
+                $this->percentages = [
+                    'Strongly Agree' => round(($totalSA / $totalValidRatings) * 100, 2),
+                    'Agree' => round(($totalA / $totalValidRatings) * 100, 2),
+                    'Neither Agree Nor Disagree' => round(($totalNAD / $totalValidRatings) * 100, 2),
+                    'Disagree' => round(($totalD / $totalValidRatings) * 100, 2),
+                    'Strongly Disagree' => round(($totalSD / $totalValidRatings) * 100, 2),
+                ];
+            } else {
+                // Set default percentages if no valid ratings
+                $this->percentages = [
+                    'Strongly Agree' => 0,
+                    'Agree' => 0,
+                    'Neither Agree Nor Disagree' => 0,
+                    'Disagree' => 0,
+                    'Strongly Disagree' => 0,
+                ];
+            }
+        } else {
+            // Set all to zero if no valid responses
+            $this->percentages = [
+                'Strongly Agree' => 0,
+                'Agree' => 0,
+                'Neither Agree Nor Disagree' => 0,
+                'Disagree' => 0,
+                'Strongly Disagree' => 0,
+            ];
+        }
 
-        // Store the results
-        $this->meanSAByDepartment[$departmentId] = [
-            'name' => $departmentName,
-            'meanSA' => $meanSA,
-            'totalResponses' => $totalResponses,
-        ];
+        // ✅ NA is separate and based on total responses
+        $this->percentages['Not Applicable'] = $totalResponses > 0 ? round(($totalNA / $totalResponses) * 100, 2) : 0;
+
+        // ✅ Interpretation based on overall score
+        $this->interpretation = $this->getInterpretation($this->overallScore);
     }
-}
+
+    private function getInterpretation($score)
+    {
+        if ($score < 60) return 'Poor';
+        if ($score >= 60 && $score <= 79.9) return 'Fair';
+        if ($score >= 80 && $score <= 89.9) return 'Satisfactory';
+        if ($score >= 90 && $score <= 94.9) return 'Very Satisfactory';
+        return 'Outstanding';
+    }
 
     public function render()
     {
         return view('livewire.director.index', [
-            'meanSAByDepartment' => $this->meanSAByDepartment,
+            'overallScore' => round($this->overallScore, 2),
+            'interpretation' => $this->interpretation,
+            'percentages' => $this->percentages,
         ]);
     }
 }

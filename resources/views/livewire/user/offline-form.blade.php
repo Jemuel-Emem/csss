@@ -156,13 +156,33 @@
 
                     <div class="flex flex-col mt-4">
                         <span class="font-sans">The rating scale is as follows:</span>
-                        <ul class="font-sans text-xl mt-2">
-                            <li class="flex gap-4">5 Strongly Agree <img src="{{ asset('images/approve.png') }}" alt="" class="h-8 w-8"></li>
-                            <li class="flex gap-4">4 Agree  <img src="{{ asset('images/happy.png') }}" alt="" class="h-8 w-8"></li>
-                            <li class="flex gap-4">3 Neither Agree nor Disagree  <img src="{{ asset('images/wondering.png') }}" alt="" class="h-8 w-8"></li>
-                            <li class="flex gap-4">2 Disagree<img src="{{ asset('images/wow.png') }}" alt="" class="h-8 w-8"></li>
-                            <li class="flex gap-4">1 Strongly Disagree  <img src="{{ asset('images/sad.png') }}" alt="" class="h-8 w-8"></li>
+                        <ul class="font-sans text-lg mt-2 space-y-2">
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 text-center">5</span> Strongly Agree
+                                <span class="text-2xl bg-gray-100 p-1 rounded-lg">😍</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 text-center">4</span> Agree
+                                <span class="text-2xl bg-gray-100 p-1 rounded-lg">😊</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 text-center">3</span> Neutral
+                                <span class="text-2xl bg-gray-100 p-1 rounded-lg">😐</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 text-center">2</span> Disagree
+                                <span class="text-2xl bg-gray-100 p-1 rounded-lg">😠</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 text-center">1</span> Strongly Disagree
+                                <span class="text-2xl bg-gray-100 p-1 rounded-lg">😡</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <span class="w-6 text-center">0</span> N/A
+                                <span class="text-2xl bg-gray-100 p-1 rounded-lg">❓</span>
+                            </li>
                         </ul>
+
                     </div>
                     <span class="text-red-500 font-bold mt-4">* Take note - All fields must be filled out before proceeding </span>
                     @error('answers')
@@ -229,6 +249,12 @@
                                     <input type="radio" wire:model="answers.{{ $question->id }}" value="5" class="hidden peer">
                                     <span class="text-3xl peer-checked:bg-gray-300 p-2 rounded-lg">😍</span>
                                     <span class="text-sm">Strongly Agree</span>
+                                </label>
+
+                                <label class="flex flex-col items-center cursor-pointer">
+                                    <input type="radio" wire:model="answers.{{ $question->id }}" value="6" class="hidden peer">
+                                    <span class="text-3xl peer-checked:bg-gray-300 p-2 rounded-lg">❓</span>
+                                    <span class="text-sm">Not Applicable</span>
                                 </label>
                             </div>
                         </div>

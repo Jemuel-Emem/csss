@@ -111,6 +111,10 @@ Route::get('/online-form', function(){
     return view('user.online-form');
 })->name('online');
 
+Route::get('/notif-form', function(){
+    return view('user.notif');
+})->name('notif');
+
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');

@@ -26,6 +26,7 @@ class ratings extends Model
         'nad',
         'a',
         'sa',
+        'na',
         'remarks'
 
     ];

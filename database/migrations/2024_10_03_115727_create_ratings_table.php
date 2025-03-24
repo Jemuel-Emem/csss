@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('nad');
             $table->integer('a');
             $table->integer('sa');
+            $table->integer('na');
             $table->text('remarks')->nullable();
             $table->timestamps();
 

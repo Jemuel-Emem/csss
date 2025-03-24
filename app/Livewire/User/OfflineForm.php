@@ -10,6 +10,7 @@ use Livewire\Component;
 
 class OfflineForm extends Component
 {
+
     public $questions;
     public $answers = [];
     public $age;
@@ -27,6 +28,7 @@ class OfflineForm extends Component
     public $nad;
     public $a;
     public $sa;
+    public $na;
     public $remarks;
     public $departments;
     public $user_id;
@@ -68,7 +70,7 @@ class OfflineForm extends Component
         'cc2' => 'required|in:1,2,3',
         'cc3' => 'required|in:1,2',
         'answers' => 'required|array',  // Validate that answers must be an array
-        'answers.*' => 'required|integer|in:1,2,3,4,5',  // Validate each item inside the array
+        'answers.*' => 'required|integer|in:1,2,3,4,5,6',  // Validate each item inside the array
         'remarks' => 'nullable|string|max:500',
     ];
 
@@ -94,6 +96,7 @@ class OfflineForm extends Component
             'nad' => 0,
             'a' => 0,
             'sa' => 0,
+            'na' => 0,
             'remarks' => $this->remarks,
         ];
 
@@ -102,6 +105,7 @@ class OfflineForm extends Component
         $nadCount = 0;
         $aCount = 0;
         $saCount = 0;
+        $naCount = 0;
 
 
         foreach ($this->answers as $answer) {
@@ -121,6 +125,10 @@ class OfflineForm extends Component
                 case 5:
                     $saCount++;
                     break;
+
+                    case 6:
+                        $naCount++;
+                        break;
             }
         }
 
@@ -130,12 +138,13 @@ class OfflineForm extends Component
         $surveyData['nad'] = $nadCount;
         $surveyData['a'] = $aCount;
         $surveyData['sa'] = $saCount;
+        $surveyData['na'] = $naCount;
 
 
         Rating::create($surveyData);
 
         $this->reset();
-        session()->flash('message', 'Thank you for your feedback!');
+        return redirect()->route('notif');
     }
 
 
