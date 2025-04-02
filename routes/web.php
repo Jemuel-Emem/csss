@@ -92,6 +92,14 @@ Route::middleware([
         Route::get('/director.services', function(){
             return view('director.services');
         })->name('director.services');
+
+        Route::get('/director.others', function(){
+            return view('director.others');
+        })->name('director.others');
+
+        Route::get('/director.questionaire', function(){
+            return view('director.questionaire');
+        })->name('director.questionaire');
     });
 
 

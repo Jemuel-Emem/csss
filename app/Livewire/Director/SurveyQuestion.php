@@ -15,6 +15,7 @@ class SurveyQuestion extends Component
     public $question;
     public $questionId;
 
+
     protected $rules = [
         'question' => 'required|string|max:255',
     ];

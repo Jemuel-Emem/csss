@@ -28,10 +28,15 @@
                     @error('age') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
                 <div>
-                    <label class="block text-gray-700">Sex:</label>
-                    <input type="text" wire:model="sex" placeholder="Enter sex" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                    <label class="block text-gray-700">Gender:</label>
+                    <select wire:model="sex" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
                     @error('sex') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
+
                 <div>
                     <label class="block text-gray-700">Region:</label>
                     <input type="text" wire:model="region" placeholder="Enter region" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
@@ -79,9 +84,9 @@
             </div>
 
             <div class="mb-6">
-                <label class="block text-gray-700">Select Offices/Department</label>
+                <label class="block text-gray-700">Select Offices</label>
                 <select wire:model="department" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
-                    <option value="">Select Department</option>
+                    <option value="">Select Offices</option>
                     @if (!empty($departments))
                     @foreach ($departments as $id => $name)
                         <option value="{{ $id }}">{{ $name }}</option>

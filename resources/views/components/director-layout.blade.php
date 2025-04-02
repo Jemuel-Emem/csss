@@ -129,7 +129,20 @@
     <div class="flex justify-between text-black p-10">
         <div class="ml-72">
             <img src="{{ asset('images/sksu1.png') }}" alt="" class="h-32 w-32">
+          <div class="flex gap-4">
+            <div class=" mt-4">
+                <a href="{{ route('director-dashboard') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 h-10 rounded-md ">Home</a>
+            </div>
+            <div class=" mt-4">
+                <a href="{{ route('director.others') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 h-10 rounded-md ">Gender / Client Type / Age</a>
+            </div>
+            <div class=" mt-4">
+                <a href="{{ route('director.questionaire') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 h-10 rounded-md "> Service Quality Dimensions</a>
+            </div>
+          </div>
         </div>
+
+
         <div>
            <span class="text-green-600 font-bold"> {{ Auth::user()->name }}</span>
           <x-dropdown>

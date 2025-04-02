@@ -1,11 +1,9 @@
 <div>
-    <div x-data="{ show: @entangle('session').defer }" x-show="show" class="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded shadow-lg" x-init="setTimeout(() => show = false, 3000)">
-        <span>{{ session('message') }}</span>
-        <button @click="show = false" class="ml-4">×</button>
-    </div>
+
     <div class="flex justify-end">
         <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-1 rounded w-32" wire:click="$set('add_modal', true)">Add Question</button>
     </div>
+
     <div class="relative overflow-x-auto mt-2">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -15,10 +13,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($questions as $question)
+                @foreach($questions as $index => $question)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $question->question }}
+                            <!-- Display the label like SQD1, SQD2, SQD3 -->
+                            {{ 'SQD' . ($index + 1) }}: {{ $question->question }}
                         </th>
                         <td class="px-6 py-4">
                             <span class="text-emerald-500 cursor-pointer" wire:click="openEditModal({{ $question->id }})">Edit</span>
@@ -60,13 +59,3 @@
         </x-card>
     </x-modal>
 </div>
-
-@push('scripts')
-<script>
-    document.addEventListener('livewire:load', function () {
-        @this.on('showNotification', message => {
-            showNotification(message);
-        });
-    });
-</script>
-@endpush
