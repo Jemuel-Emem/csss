@@ -2,82 +2,112 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\ratings as Rate;
 use Livewire\Component;
+use App\Models\ratings as Rate;
+use Carbon\Carbon;
 
 class Index extends Component
 {
-    public $rates;
-    public $totals;
-    public $percentages;
-    public $mostChosenCategory;
-    public $totalUsers;
+    public $dailyData = [];
+    public $weeklyData = [];
+    public $yearlyData = [];
 
     public $categoryLabels = [
-        'verysatisfied' => 'Very Satisfied',
-        'satisfied' => 'Satisfied',
-        'neithersatisfied' => 'Neither Satisfied nor Dissatisfied',
-        'dissatisfied' => 'Dissatisfied',
-        'notapplicable' => 'Not Applicable',
+        'sa' => 'Strongly Agree',
+        'a' => 'Agree',
+        'nad' => 'Neither Agree Nor Disagree',
+        'd' => 'Disagree',
+        'sd' => 'Strongly Disagree',
+        'na' => 'Not Applicable'
     ];
 
     public function mount()
-{
-    $this->rates = Rate::where('user_id', auth()->id())->get();
-    $this->totalUsers = $this->rates->count();
-    $this->calculateTotals();
-    $this->calculatePercentages();
-    $this->determineMostChosenCategory();
-}
-
-
-    public function calculateTotals()
     {
-        $this->totals = [
-            'notapplicable' => $this->rates->sum('sd'),
-            'dissatisfied' => $this->rates->sum('d'),
-            'neithersatisfied' => $this->rates->sum('nad'),
-            'satisfied' => $this->rates->sum('a'),
-            'verysatisfied' => $this->rates->sum('sa'),
+        $userId = auth()->id();
+
+        // Get survey data for different time ranges for the specific user
+        $this->dailyData = $this->calculateSurveyData(Carbon::today(), $userId);
+        $this->weeklyData = $this->calculateSurveyData(Carbon::now()->startOfWeek(), $userId);
+        $this->yearlyData = $this->calculateSurveyData(Carbon::now()->startOfYear(), $userId);
+    }
+
+    private function calculateSurveyData($startDate, $userId)
+    {
+        // Fetch filtered responses for the specific user
+        $totalResponses = Rate::where('user_id', $userId)
+                            ->whereDate('created_at', '>=', $startDate)
+                            ->count();
+
+        $totalSA = Rate::where('user_id', $userId)
+                    ->whereDate('created_at', '>=', $startDate)
+                    ->sum('sa');
+        $totalA = Rate::where('user_id', $userId)
+                    ->whereDate('created_at', '>=', $startDate)
+                    ->sum('a');
+        $totalNAD = Rate::where('user_id', $userId)
+                    ->whereDate('created_at', '>=', $startDate)
+                    ->sum('nad');
+        $totalD = Rate::where('user_id', $userId)
+                    ->whereDate('created_at', '>=', $startDate)
+                    ->sum('d');
+        $totalSD = Rate::where('user_id', $userId)
+                    ->whereDate('created_at', '>=', $startDate)
+                    ->sum('sd');
+        $totalNA = Rate::where('user_id', $userId)
+                    ->whereDate('created_at', '>=', $startDate)
+                    ->sum('na');
+
+        // Calculate percentages differently
+        $percentages = [];
+        $totalPossiblePoints = $totalResponses * 5; // Assuming 5 is the max points per response
+
+        if ($totalPossiblePoints > 0) {
+            $percentages = [
+                'Strongly Agree' => round(($totalSA / $totalPossiblePoints) * 100, 2),
+                'Agree' => round(($totalA / $totalPossiblePoints) * 100, 2),
+                'Neither Agree Nor Disagree' => round(($totalNAD / $totalPossiblePoints) * 100, 2),
+                'Disagree' => round(($totalD / $totalPossiblePoints) * 100, 2),
+                'Strongly Disagree' => round(($totalSD / $totalPossiblePoints) * 100, 2),
+                'Not Applicable' => round(($totalNA / $totalPossiblePoints) * 100, 2)
+            ];
+        } else {
+            $percentages = [
+                'Strongly Agree' => 0,
+                'Agree' => 0,
+                'Neither Agree Nor Disagree' => 0,
+                'Disagree' => 0,
+                'Strongly Disagree' => 0,
+                'Not Applicable' => 0
+            ];
+        }
+
+        // Calculate overall score differently
+        $positiveResponses = $totalSA + $totalA;
+        $totalValidResponses = $totalSA + $totalA + $totalNAD + $totalD + $totalSD;
+        $overallScore = ($totalValidResponses > 0) ? ($positiveResponses / $totalValidResponses) * 100 : 0;
+
+        return [
+            'score' => round($overallScore, 2),
+            'interpretation' => $this->getInterpretation($overallScore),
+            'percentages' => $percentages
         ];
     }
 
-    public function calculatePercentages()
+    private function getInterpretation($score)
     {
-        if ($this->totalUsers > 0) {
-            $this->percentages = [
-                'verysatisfied' => ($this->totals['verysatisfied'] / $this->totalUsers) * 100,
-                'satisfied' => ($this->totals['satisfied'] / $this->totalUsers) * 100,
-                'neithersatisfied' => ($this->totals['neithersatisfied'] / $this->totalUsers) * 100,
-                'dissatisfied' => ($this->totals['dissatisfied'] / $this->totalUsers) * 100,
-                'notapplicable' => ($this->totals['notapplicable'] / $this->totalUsers) * 100,
-            ];
-        } else {
-            // If there are no users, set percentages to 0
-            $this->percentages = [
-                'verysatisfied' => 0,
-                'satisfied' => 0,
-                'neithersatisfied' => 0,
-                'dissatisfied' => 0,
-                'notapplicable' => 0,
-            ];
-        }
-    }
-
-    public function determineMostChosenCategory()
-    {
-        $maxValue = max($this->totals);
-        $mostChosen = array_search($maxValue, $this->totals);
-        $this->mostChosenCategory = $this->categoryLabels[$mostChosen] ?? 'None';
+        if ($score < 60) return 'Poor';
+        if ($score >= 60 && $score <= 79.9) return 'Fair';
+        if ($score >= 80 && $score <= 89.9) return 'Satisfactory';
+        if ($score >= 90 && $score <= 94.9) return 'Very Satisfactory';
+        return 'Outstanding';
     }
 
     public function render()
     {
         return view('livewire.admin.index', [
-            'rates' => $this->rates,
-            'totals' => $this->totals,
-            'percentages' => $this->percentages,
-            'mostChosenCategory' => $this->mostChosenCategory,
+            'dailyData' => $this->dailyData,
+            'weeklyData' => $this->weeklyData,
+            'yearlyData' => $this->yearlyData,
         ]);
     }
 }

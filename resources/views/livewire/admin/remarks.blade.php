@@ -22,8 +22,9 @@
                         <td class="px-4 py-2 text-center">{{ $rating->age }}</td>
                         <td class="px-4 py-2 text-center">{{ $rating->sex }}</td>
                         <td class="px-4 py-2 text-center">{{ $rating->region }}</td>
-                        <td class="px-4 py-2 text-center">{{ $rating->agency_visited }}</td>
-                        <td class="px-4 py-2 text-center">{{ $rating->service_availed }}</td>
+                        <td class="px-4 py-2 text-center">{{ $rating->office->name ?? 'N/A' }}</td>
+                        <td class="px-4 py-2 text-center">{{ $rating->service->name ?? 'N/A' }}</td>
+
                         <td class="px-4 py-2 text-center">{{ $rating->customer_type }}</td>
                         <td class="px-4 py-2 text-center">{{ $rating->remarks }}</td>
                     </tr>

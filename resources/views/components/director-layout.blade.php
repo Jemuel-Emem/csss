@@ -136,9 +136,9 @@
             <div class=" mt-4">
                 <a href="{{ route('director.others') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 h-10 rounded-md ">Gender / Client Type / Age</a>
             </div>
-            <div class=" mt-4">
+            {{-- <div class=" mt-4">
                 <a href="{{ route('director.questionaire') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 h-10 rounded-md "> Service Quality Dimensions</a>
-            </div>
+            </div> --}}
           </div>
         </div>
 
