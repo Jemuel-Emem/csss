@@ -89,8 +89,10 @@ class Index extends Component
         return [
             'score' => round($overallScore, 2),
             'interpretation' => $this->getInterpretation($overallScore),
-            'percentages' => $percentages
+            'percentages' => $percentages,
+            'naPercentage' => ($totalResponses > 0) ? round(($totalNA / $totalResponses) * 100, 2) : 0
         ];
+
     }
 
     private function getInterpretation($score)
