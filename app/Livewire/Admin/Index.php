@@ -10,6 +10,7 @@ class Index extends Component
 {
     public $dailyData = [];
     public $weeklyData = [];
+    public $monthlyData = [];
     public $yearlyData = [];
 
     public $categoryLabels = [
@@ -25,51 +26,62 @@ class Index extends Component
     {
         $userId = auth()->id();
 
-        // Get survey data for different time ranges for the specific user
         $this->dailyData = $this->calculateSurveyData(Carbon::today(), $userId);
         $this->weeklyData = $this->calculateSurveyData(Carbon::now()->startOfWeek(), $userId);
+        $this->monthlyData = $this->calculateSurveyData(Carbon::now()->startOfMonth(), $userId); // ✅ Monthly added
         $this->yearlyData = $this->calculateSurveyData(Carbon::now()->startOfYear(), $userId);
     }
 
     private function calculateSurveyData($startDate, $userId)
     {
-        // Fetch filtered responses for the specific user
         $totalResponses = Rate::where('user_id', $userId)
-                            ->whereDate('created_at', '>=', $startDate)
-                            ->count();
+            ->whereDate('created_at', '>=', $startDate)
+            ->count();
 
         $totalSA = Rate::where('user_id', $userId)
-                    ->whereDate('created_at', '>=', $startDate)
-                    ->sum('sa');
+            ->whereDate('created_at', '>=', $startDate)
+            ->sum('sa');
         $totalA = Rate::where('user_id', $userId)
-                    ->whereDate('created_at', '>=', $startDate)
-                    ->sum('a');
+            ->whereDate('created_at', '>=', $startDate)
+            ->sum('a');
         $totalNAD = Rate::where('user_id', $userId)
-                    ->whereDate('created_at', '>=', $startDate)
-                    ->sum('nad');
+            ->whereDate('created_at', '>=', $startDate)
+            ->sum('nad');
         $totalD = Rate::where('user_id', $userId)
-                    ->whereDate('created_at', '>=', $startDate)
-                    ->sum('d');
+            ->whereDate('created_at', '>=', $startDate)
+            ->sum('d');
         $totalSD = Rate::where('user_id', $userId)
-                    ->whereDate('created_at', '>=', $startDate)
-                    ->sum('sd');
+            ->whereDate('created_at', '>=', $startDate)
+            ->sum('sd');
         $totalNA = Rate::where('user_id', $userId)
-                    ->whereDate('created_at', '>=', $startDate)
-                    ->sum('na');
+            ->whereDate('created_at', '>=', $startDate)
+            ->sum('na');
 
-        // Calculate percentages differently
+        // Only valid ratings (excluding Not Applicable)
+        $totalValidRatings = $totalSA + $totalA + $totalNAD + $totalD + $totalSD;
+
+        $overallScore = ($totalValidRatings > 0)
+            ? (($totalSA + $totalA) / $totalValidRatings) * 100
+            : 0;
+
         $percentages = [];
-        $totalPossiblePoints = $totalResponses * 5; // Assuming 5 is the max points per response
-
-        if ($totalPossiblePoints > 0) {
+        if ($totalValidRatings > 0) {
             $percentages = [
-                'Strongly Agree' => round(($totalSA / $totalPossiblePoints) * 100, 2),
-                'Agree' => round(($totalA / $totalPossiblePoints) * 100, 2),
-                'Neither Agree Nor Disagree' => round(($totalNAD / $totalPossiblePoints) * 100, 2),
-                'Disagree' => round(($totalD / $totalPossiblePoints) * 100, 2),
-                'Strongly Disagree' => round(($totalSD / $totalPossiblePoints) * 100, 2),
-                'Not Applicable' => round(($totalNA / $totalPossiblePoints) * 100, 2)
+                'Strongly Agree' => round(($totalSA / $totalValidRatings) * 100, 2),
+                'Agree' => round(($totalA / $totalValidRatings) * 100, 2),
+                'Neither Agree Nor Disagree' => round(($totalNAD / $totalValidRatings) * 100, 2),
+                'Disagree' => round(($totalD / $totalValidRatings) * 100, 2),
+                'Strongly Disagree' => round(($totalSD / $totalValidRatings) * 100, 2),
             ];
+
+            // Final adjustment to make sure total = 100%
+            $sum = array_sum($percentages);
+            if ($sum != 100) {
+                end($percentages);
+                $lastKey = key($percentages);
+                $percentages[$lastKey] += (100 - $sum);
+                $percentages[$lastKey] = round($percentages[$lastKey], 2);
+            }
         } else {
             $percentages = [
                 'Strongly Agree' => 0,
@@ -77,22 +89,17 @@ class Index extends Component
                 'Neither Agree Nor Disagree' => 0,
                 'Disagree' => 0,
                 'Strongly Disagree' => 0,
-                'Not Applicable' => 0
             ];
         }
 
-        // Calculate overall score differently
-        $positiveResponses = $totalSA + $totalA;
-        $totalValidResponses = $totalSA + $totalA + $totalNAD + $totalD + $totalSD;
-        $overallScore = ($totalValidResponses > 0) ? ($positiveResponses / $totalValidResponses) * 100 : 0;
+        $naPercentage = ($totalResponses > 0) ? round(($totalNA / $totalResponses) * 100, 2) : 0;
 
         return [
             'score' => round($overallScore, 2),
             'interpretation' => $this->getInterpretation($overallScore),
             'percentages' => $percentages,
-            'naPercentage' => ($totalResponses > 0) ? round(($totalNA / $totalResponses) * 100, 2) : 0
+            'naPercentage' => $naPercentage
         ];
-
     }
 
     private function getInterpretation($score)
@@ -109,6 +116,7 @@ class Index extends Component
         return view('livewire.admin.index', [
             'dailyData' => $this->dailyData,
             'weeklyData' => $this->weeklyData,
+            'monthlyData' => $this->monthlyData, // ✅ added to view
             'yearlyData' => $this->yearlyData,
         ]);
     }

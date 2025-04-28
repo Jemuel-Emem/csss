@@ -277,7 +277,7 @@
 
 
   <div class="mb-6">
-    <label class="block text-gray-700">Remarks (optional):</label>
+    Comments and Suggestions on how we can further improve our services (Optional)
     <textarea class="w-full mt-2 p-3 border border-gray-300 rounded-md" wire:model="remarks" rows="4" placeholder="Any suggestions or feedback..."></textarea>
 
 </div>

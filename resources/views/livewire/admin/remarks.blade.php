@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-gray-700 mb-4">Remarks</h2>
+    <h2 class="text-2xl font-bold text-gray-700 mb-4">Ratings</h2>
 
     @if($ratings->isEmpty())
         <p>No ratings found.</p>

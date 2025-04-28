@@ -5,7 +5,8 @@
     </div>
 
     <!-- Daily, Weekly, and Yearly Sections -->
-    @foreach (['daily' => $dailyData, 'weekly' => $weeklyData, 'yearly' => $yearlyData] as $label => $data)
+    @foreach (['daily' => $dailyData, 'weekly' => $weeklyData, 'monthly' => $monthlyData, 'yearly' => $yearlyData] as $label => $data)
+
         <div class="w-full max-w-7xl bg-gray-100 rounded-lg shadow-md p-6 mb-6">
             <h3 class="text-xl font-bold text-gray-700 capitalize">{{ $label }} Survey Results</h3>
 
