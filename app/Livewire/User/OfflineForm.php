@@ -10,6 +10,8 @@ use Livewire\Component;
 
 class OfflineForm extends Component
 {
+    public $email;
+    public $date;
 
     public $questions;
     public $answers = [];
@@ -62,6 +64,8 @@ class OfflineForm extends Component
         'age' => 'required|integer|min:0',
         'name' => 'required',
         'sex' => 'required|string|max:10',
+        'email' => 'required|email',
+        'date' => 'required|date',
         'region' => 'required|string|max:100',
        'office_id' => 'required|exists:offices,id',
        'service_id' => 'required|exists:services,id',
@@ -85,6 +89,8 @@ class OfflineForm extends Component
             'age' => $this->age,
             'sex' => $this->sex,
             'region' => $this->region,
+            'email' => $this->email,
+             'date' => $this->date,
             'office_id' => $this->office_id,
             'service_id' => $this->service_id,
             'customer_type' => $this->customer_type,

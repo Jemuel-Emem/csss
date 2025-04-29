@@ -27,6 +27,8 @@ class ratings extends Model
         'a',
         'sa',
         'na',
+        'date',
+        'email',
         'remarks'
 
     ];

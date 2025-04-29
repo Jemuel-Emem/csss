@@ -43,6 +43,17 @@
                     @error('region') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
+            <div>
+                <label class="block text-gray-700">Email:</label>
+                <input type="email" placeholder="Enter email" wire:model="email" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+
+            <div>
+                <label class="block text-gray-700">Date:</label>
+                <input type="date" wire:model="date" class="w-full mt-1 p-2 border border-gray-300 rounded-md">
+                @error('date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                 <div class="mb-6">

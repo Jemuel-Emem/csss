@@ -90,22 +90,22 @@
                     </a>
                  </li> --}}
 
-                 <li>
+                 {{-- <li>
                     <a href="{{ route('rem') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i class="ri-donut-chart-fill text-sky-700"></i>
                        <span class="flex-1 ms-3 whitespace-nowrap">Evaluation</span>
 
                     </a>
-                 </li>
+                 </li> --}}
 
-                 <li>
+                 {{-- <li>
                     <a href="{{ route('admin.cc-list') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <i class="ri-team-fill text-sky-700"></i>
 
                        <span class="flex-1 ms-3 whitespace-nowrap">Citizen's Charter </span>
 
                     </a>
-                 </li>
+                 </li> --}}
 
                  {{-- <li>
                     <a href="{{ route('office') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

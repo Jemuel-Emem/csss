@@ -100,6 +100,10 @@ Route::middleware([
         Route::get('/director.questionaire', function(){
             return view('director.questionaire');
         })->name('director.questionaire');
+
+        Route::get('/director.remarks', function(){
+            return view('director.remarks');
+        })->name('director.remarks');
     });
 
 

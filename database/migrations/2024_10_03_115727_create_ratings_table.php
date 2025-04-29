@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('age');
             $table->string('sex');
             $table->string('region');
+            $table->string('email');
+            $table->string('date');
             $table->string('customer_type');
             $table->integer('cc1');
             $table->integer('cc2');
