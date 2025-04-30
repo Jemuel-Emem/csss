@@ -7,6 +7,7 @@
         <table class="table-auto w-full">
             <thead class="bg-gray-200">
                 <tr>
+                    <th class="px-4 py-2">Name</th>
                     <th class="px-4 py-2">Age</th>
                     <th class="px-4 py-2">Sex</th>
                     <th class="px-4 py-2">Region</th>
@@ -14,11 +15,14 @@
                     <th class="px-4 py-2">Service Availed</th>
                     <th class="px-4 py-2">Customer Type</th>
                     <th class="px-4 py-2">Remarks</th>
+                    <th class="px-4 py-2">Date</th>
+                    <th class="px-4 py-2">Email</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($ratings as $rating)
                     <tr class="bg-white border-b">
+                        <td class="px-4 py-2 text-center">{{ $rating->name }}</td>
                         <td class="px-4 py-2 text-center">{{ $rating->age }}</td>
                         <td class="px-4 py-2 text-center">{{ $rating->sex }}</td>
                         <td class="px-4 py-2 text-center">{{ $rating->region }}</td>
@@ -27,6 +31,8 @@
 
                         <td class="px-4 py-2 text-center">{{ $rating->customer_type }}</td>
                         <td class="px-4 py-2 text-center">{{ $rating->remarks }}</td>
+                        <td class="px-4 py-2 text-center">{{ $rating->date }}</td>
+                        <td class="px-4 py-2 text-center">{{ $rating->email }}</td>
                     </tr>
                 @endforeach
             </tbody>
