@@ -120,7 +120,13 @@
                     </a>
                  </li>
 
+                 <li>
+                    <a href="{{ route('director.manage_eval') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <i class="ri-user-add-fill"></i>
+                       <span class="flex-1 ms-3 whitespace-nowrap">Manage Evaluation</span>
 
+                    </a>
+                 </li>
 
                  <li>
                     <a href="{{ route('director.remarks') }}"   class="flex items-center p-2 text-white hover:text-black rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

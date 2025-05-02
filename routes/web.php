@@ -104,6 +104,10 @@ Route::middleware([
         Route::get('/director.remarks', function(){
             return view('director.remarks');
         })->name('director.remarks');
+
+        Route::get('/director.manage_eval', function(){
+            return view('director.manage_eval');
+        })->name('director.manage_eval');
     });
 
 

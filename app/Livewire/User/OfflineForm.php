@@ -62,9 +62,9 @@ class OfflineForm extends Component
     protected $rules = [
         'user_id' => 'required',
         'age' => 'required|integer|min:0',
-        'name' => 'required',
+        'name' => 'nullable',
         'sex' => 'required|string|max:10',
-        'email' => 'required|email',
+        'email' => 'nullable',
         'date' => 'required|date',
         'region' => 'required|string|max:100',
        'office_id' => 'required|exists:offices,id',
